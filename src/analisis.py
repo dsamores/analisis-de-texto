@@ -10,47 +10,57 @@ class Oracion:
         self.usuario = usuario
 
     def analizar_elementos_basicos(self):
-        print(f"> El numero de caracteres (con espacios) es: {len(self.texto)}\n")
+        resultado = "<div><p><strong>Analisis basico:</strong></p><p>"
+
+        resultado += f"El numero de caracteres (con espacios) es: {len(self.texto)}<br>"
 
         oracion_sin_espacios = self.texto.replace(" ", "")
 
-        print(f"> El numero de caracteres (sin espacios) es: {len(oracion_sin_espacios)}\n")
+        resultado += f"El numero de caracteres (sin espacios) es: {len(oracion_sin_espacios)}<br>"
 
-        print(f"> El numero de palabras es: {len(self.palabras)}\n")
+        resultado += f"El numero de palabras es: {len(self.palabras)}<br>"
 
-        print(f"> Comienza con: {self.texto[0]}\n")
-        print(f"> El segundo caracter es: {self.texto[1]}\n")
-        print(f"> El tercer caracter es: {self.texto[2]}\n")
-        print(f"> Los 5 primeros caracteres son: {self.texto[:5]}\n")
+        resultado += f"Comienza con: {self.texto[0]}<br>"
+        resultado += f"El segundo caracter es: {self.texto[1]}<br>"
+        resultado += f"El tercer caracter es: {self.texto[2]}<br>"
+        resultado += f"Los 5 primeros caracteres son: {self.texto[:5]}<br>"
 
-        print(f"> Termina en: {self.texto[-1]}\n")
-        print(f"> El penultimo caracter es: {self.texto[-2]}\n")
-        print(f"> El antepenultimo caracter es: {self.texto[-3]}\n")
-        print(f"> Los ultimos 5 caracteres son: {self.texto[-5:]}\n")
+        resultado += f"Termina en: {self.texto[-1]}<br>"
+        resultado += f"El penultimo caracter es: {self.texto[-2]}<br>"
+        resultado += f"El antepenultimo caracter es: {self.texto[-3]}<br>"
+        resultado += f"Los ultimos 5 caracteres son: {self.texto[-5:]}<br>"
 
+        resultado += "</p></div>"
+        return resultado
 
     def analizar_saludo(self):
+        resultado = "<div><p><strong>Analisis de saludo:</strong></p><p>"
+
         if self.texto.startswith("Hola") or self.texto.startswith("Saludos"):
-            print("> Esta oracion parece un saludo\n")
+            resultado += "Esta oracion parece un saludo<br>"
         else:
-            print("> Esta oracion no parece un saludo\n")
+            resultado += "Esta oracion no parece un saludo<br>"
 
         patron_de_oracion_completa = re.compile(r"[A-Z][\w\s,]+\.")
 
-        print(f"> {"Si" if patron_de_oracion_completa.match(self.texto) else "No"} es una oracion completa\n")
+        resultado += f"{"Si" if patron_de_oracion_completa.match(self.texto) else "No"} es una oracion completa<br>"
 
         if self.usuario not in self.texto:
-            print("> No es una introduccion\n")
+            resultado += "No es una introduccion<br>"
         else:
-            print("> Es una introduccion\n")
+            resultado += "Es una introduccion<br>"
+
+        resultado += "</p></div>"
+        return resultado
 
     def analizar_vocales(self):
+        resultado = "<div><p><strong>Analisis de vocales:</strong></p><p>"
         contador_vocales = 0
         for letra in self.texto:
             if letra.lower() in 'aeiou':
                 contador_vocales += 1
 
-        print(f"> La oracion tiene {contador_vocales} vocales\n")
+        resultado += f"La oracion tiene {contador_vocales} vocales<br>"
 
         primera_vocal = ""
         i = 0
@@ -59,44 +69,49 @@ class Oracion:
                 primera_vocal = self.texto[i]
             i += 1
 
-        print(f"> La primera vocal es '{primera_vocal}' en la posicion {i - 1}\n")
+        resultado += f"La primera vocal es '{primera_vocal}' en la posicion {i - 1}<br>"
 
+        resultado += "</p></div>"
+        return resultado
 
     def analizar_palabras(self):
-        print(f"> Las palabras de la oracion son: {self.palabras}\n")
+        resultado = "<div><p><strong>Analisis de palabras:</strong></p><p>"
+        resultado += f"Las palabras de la oracion son: {self.palabras}<br>"
         longitudes = []
 
         for palabra in self.palabras:
             longitud = len(palabra)
             longitudes.append(longitud)
 
-        print(f"> Las longitudes de las palabras son: {longitudes}\n")
+        resultado += f"Las longitudes de las palabras son: {longitudes}<br>"
 
         longitud_promedio = sum(longitudes) / len(longitudes)
 
-        print(f"> La longitud promedio de las palabras es: {longitud_promedio}\n")
+        resultado += f"La longitud promedio de las palabras es: {longitud_promedio}<br>"
 
-        print(f"> La palabra mas corta mide: {min(longitudes)}\n")
+        resultado += f"La palabra mas corta mide: {min(longitudes)}<br>"
 
-        print(f"> La palabra mas larga mide: {max(longitudes)}\n")
+        resultado += f"La palabra mas larga mide: {max(longitudes)}<br>"
 
         contador_de_palabras = defaultdict(lambda: 0)
         for palabra in self.palabras:
             palabra_minusculas = palabra.lower()
             contador_de_palabras[palabra_minusculas] += 1
 
-        print("> Contador de palabras:")
+        resultado += "Contador de palabras:<br>"
         for palabra, contador in contador_de_palabras.items():
-            print(f"> {palabra}: {contador}")
-        print()
+            resultado += (f"{palabra}: {contador}<br>")
+        
+        resultado += "</p></div>"
+        return resultado
 
     def analizar_oracion(self):
-        print(f"> Analizando: '{self.texto}'...\n")
+        resultado = self.analizar_elementos_basicos()
 
-        self.analizar_elementos_basicos()
+        resultado += self.analizar_saludo()
 
-        self.analizar_saludo()
+        resultado += self.analizar_vocales()
 
-        self.analizar_vocales()
+        resultado += self.analizar_palabras()
 
-        self.analizar_palabras()
+        return resultado

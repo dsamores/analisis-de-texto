@@ -9,10 +9,16 @@
             Puedo contar el numero de palabras, puedo contar el numero de caracteres, 
             puedo hacer analisis del sentimiento de la oracion y varias cosas mas.
         </p>
-        <form>
-            <textarea placeholder="Escribe algo..." rows="4" style="width: 500px; height: 100px;"></textarea>
+        <form method="post" action="/analizar">
+            <textarea name="texto" placeholder="Escribe algo..." rows="4" style="width: 500px; height: 100px;"></textarea>
             <br>
             <input type="submit" value="Analizar">
         </form>
+        <div>
+            <br>
+            <strong>Recibido:</strong> {{ texto }}
+            <br>
+            {{ resultado|safe }}
+        </div>
     </body>
 </html>
