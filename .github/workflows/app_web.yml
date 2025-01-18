@@ -11,6 +11,9 @@ jobs:
         name: lint
         steps:
             - uses: actions/checkout@v3
+            - name: Instalar librerias
+              run: |
+                pip install -r requirements.txt
             - name: Correr formateo de codigo
               run: |
                 pylint src
