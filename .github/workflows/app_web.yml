@@ -1,0 +1,17 @@
+name: App web analisis de texto
+
+on: [push]
+
+permissions:
+    contents: read
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        name: lint
+        steps:
+            - uses: actions/checkout@v3
+            - name: Correr formateo de codigo
+              run: |
+                pylint src
+                flake8 src
