@@ -68,7 +68,7 @@ class Oracion:
         for letra in self.texto:
             if letra.lower() in 'aeiou':
                 contador_vocales += 1
-            elif letra.isalpha():  # Verifica si la letra es alfabética (no es un número ni un signo de puntuación)
+            elif letra.isalpha():
                 contador_consonantes += 1
 
         resultado += f"La oracion tiene {contador_vocales} vocales<br>"
@@ -116,7 +116,7 @@ class Oracion:
             resultado += (f"{palabra}: {contador}<br>")
         resultado += "</p></div>"
         return resultado
-    
+
     def analizar_sentimiento(self):
         """Analisis de sentimiento de la oracion."""
         resultado = "<div><p><strong>Analisis de sentimiento:</strong></p><p>"
@@ -140,9 +140,11 @@ class Oracion:
         else:
             resultado += "El sentimiento de la oracion es neutral<br>"
 
+        contador_neutrales = len(self.palabras) - contador_positivo - contador_negativo
+
         resultado += f"Palabras positivas: {contador_positivo}<br>"
         resultado += f"Palabras negativas: {contador_negativo}<br>"
-        resultado += f"Palabras neutrales: {len(self.palabras) - contador_positivo - contador_negativo}<br>"
+        resultado += f"Palabras neutrales: {contador_neutrales}<br>"
 
         resultado += "</p></div>"
         return resultado
