@@ -3,18 +3,29 @@ name: App web analisis de texto
 on: [push]
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    lint:
-        runs-on: ubuntu-latest
-        name: lint
-        steps:
-            - uses: actions/checkout@v3
-            - name: Instalar librerias
-              run: |
-                pip install -r requirements.txt
-            - name: Correr formateo de codigo
-              run: |
-                pylint src
-                flake8 src
+  lint:
+    runs-on: ubuntu-latest
+    name: lint
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar librerias
+        run: |
+          pip install -r requirements.txt
+      - name: Correr formateo de codigo
+        run: |
+          pylint src
+          flake8 src
+  pruebas:
+    runs-on: ubuntu-latest
+    name: pruebas
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar librerias
+        run: |
+          pip install -r requirements.txt
+      - name: Correr pruebas automatizadas
+        run: |
+          pytest tests
