@@ -5,6 +5,8 @@ import sys
 from src.analisis import Oracion
 
 
+
+
 def saludo():
     """Esta funcion imprime un saludo y pide el nombre al usuario."""
     print("Ingresa tu nombre: ")
