@@ -1,15 +1,19 @@
+"""Modulo de analisis de texto. Incluye la clase Oracion."""
 import re
 from collections import defaultdict
 
 
 class Oracion:
+    """Clase Oracion para analisis de texto de una oracion."""
 
     def __init__(self, texto, usuario):
+        """Constructor de Oracion."""
         self.texto = texto
         self.palabras = texto.split(" ")
         self.usuario = usuario
 
     def analizar_elementos_basicos(self):
+        """Analisis de elementos basicos de la oracion."""
         resultado = "<div><p><strong>Analisis basico:</strong></p><p>"
 
         resultado += f"El numero de caracteres (con espacios) es: {len(self.texto)}<br>"
@@ -34,6 +38,7 @@ class Oracion:
         return resultado
 
     def analizar_saludo(self):
+        """Analisis para determinar si la oracion es saludo o no."""
         resultado = "<div><p><strong>Analisis de saludo:</strong></p><p>"
 
         if self.texto.startswith("Hola") or self.texto.startswith("Saludos"):
@@ -43,7 +48,9 @@ class Oracion:
 
         patron_de_oracion_completa = re.compile(r"[A-Z][\w\s,]+\.")
 
-        resultado += f"{"Si" if patron_de_oracion_completa.match(self.texto) else "No"} es una oracion completa<br>"
+        es_oracion = "Si" if patron_de_oracion_completa.match(self.texto) else "No"
+
+        resultado += f"{es_oracion} es una oracion completa<br>"
 
         if self.usuario not in self.texto:
             resultado += "No es una introduccion<br>"
@@ -54,6 +61,7 @@ class Oracion:
         return resultado
 
     def analizar_vocales(self):
+        """Analisis de vocales en la oracion."""
         resultado = "<div><p><strong>Analisis de vocales:</strong></p><p>"
         contador_vocales = 0
         for letra in self.texto:
@@ -75,6 +83,7 @@ class Oracion:
         return resultado
 
     def analizar_palabras(self):
+        """Analisis de palabras en la oracion."""
         resultado = "<div><p><strong>Analisis de palabras:</strong></p><p>"
         resultado += f"Las palabras de la oracion son: {self.palabras}<br>"
         longitudes = []
@@ -101,11 +110,11 @@ class Oracion:
         resultado += "Contador de palabras:<br>"
         for palabra, contador in contador_de_palabras.items():
             resultado += (f"{palabra}: {contador}<br>")
-        
         resultado += "</p></div>"
         return resultado
 
     def analizar_oracion(self):
+        """Analisis comprehensivo de la oracion, llama a las otras funciones."""
         resultado = self.analizar_elementos_basicos()
 
         resultado += self.analizar_saludo()
