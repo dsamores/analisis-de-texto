@@ -64,11 +64,15 @@ class Oracion:
         """Analisis de vocales en la oracion."""
         resultado = "<div><p><strong>Analisis de vocales:</strong></p><p>"
         contador_vocales = 0
+        contador_consonantes = 0
         for letra in self.texto:
             if letra.lower() in 'aeiou':
                 contador_vocales += 1
+            elif letra.isalpha():
+                contador_consonantes += 1
 
         resultado += f"La oracion tiene {contador_vocales} vocales<br>"
+        resultado += f"La oracion tiene {contador_consonantes} consonantes<br>"
 
         primera_vocal = ""
         i = 0
@@ -113,6 +117,38 @@ class Oracion:
         resultado += "</p></div>"
         return resultado
 
+    def analizar_sentimiento(self):
+        """Analisis de sentimiento de la oracion."""
+        resultado = "<div><p><strong>Analisis de sentimiento:</strong></p><p>"
+
+        palabras_positivas = {'bueno', 'feliz', 'positivo', 'excelente', 'genial'}
+        palabras_negativas = {'malo', 'triste', 'negativo', 'terrible', 'horrible'}
+
+        contador_positivo = 0
+        contador_negativo = 0
+
+        for palabra in self.palabras:
+            if palabra.lower() in palabras_positivas:
+                contador_positivo += 1
+            elif palabra.lower() in palabras_negativas:
+                contador_negativo += 1
+
+        if contador_positivo > contador_negativo:
+            resultado += "El sentimiento de la oracion es positivo<br>"
+        elif contador_negativo > contador_positivo:
+            resultado += "El sentimiento de la oracion es negativo<br>"
+        else:
+            resultado += "El sentimiento de la oracion es neutral<br>"
+
+        contador_neutrales = len(self.palabras) - contador_positivo - contador_negativo
+
+        resultado += f"Palabras positivas: {contador_positivo}<br>"
+        resultado += f"Palabras negativas: {contador_negativo}<br>"
+        resultado += f"Palabras neutrales: {contador_neutrales}<br>"
+
+        resultado += "</p></div>"
+        return resultado
+
     def analizar_oracion(self):
         """Analisis comprehensivo de la oracion, llama a las otras funciones."""
         resultado = self.analizar_elementos_basicos()
@@ -122,5 +158,7 @@ class Oracion:
         resultado += self.analizar_vocales()
 
         resultado += self.analizar_palabras()
+
+        resultado += self.analizar_sentimiento()
 
         return resultado
