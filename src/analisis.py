@@ -2,6 +2,8 @@
 import re
 from collections import defaultdict
 
+import stanza
+
 
 class Oracion:
     """Clase Oracion para analisis de texto de una oracion."""
@@ -149,6 +151,22 @@ class Oracion:
         resultado += "</p></div>"
         return resultado
 
+    def analisis_con_stanza(self):
+        """Analizar la oracion usando stanza para tokenizacion, para ver
+        los lemmas y para ver la categoria gramatical de las palabras.
+        """
+        nlp = stanza.Pipeline(lang='es', processors='tokenize,mwt,pos,lemma')
+        doc = nlp(self.texto)
+
+        resultado = "<div><p><strong>Analisis con stanza:</strong></p><p>"
+
+        for sentence in doc.sentences:
+            for word in sentence.words:
+                resultado += f"{word.text}: {word.lemma} ({word.pos}) - {word.feats}<br>"
+
+        resultado += "</p></div>"
+        return resultado
+
     def analizar_oracion(self):
         """Analisis comprehensivo de la oracion, llama a las otras funciones."""
         resultado = self.analizar_elementos_basicos()
@@ -160,5 +178,7 @@ class Oracion:
         resultado += self.analizar_palabras()
 
         resultado += self.analizar_sentimiento()
+
+        resultado += self.analisis_con_stanza()
 
         return resultado

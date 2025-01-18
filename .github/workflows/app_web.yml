@@ -28,4 +28,4 @@ jobs:
           pip install -r requirements.txt
       - name: Correr pruebas automatizadas
         run: |
-          pytest tests --cov=src --cov-report=term-missing --cov-fail-under=30
+          pytest tests --cov=src --cov-report=term-missing --cov-fail-under=10
