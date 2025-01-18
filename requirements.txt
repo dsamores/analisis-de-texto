@@ -1,6 +1,7 @@
 astroid==3.3.8
 blinker==1.9.0
 click==8.1.8
+coverage==7.6.10
 dill==0.3.9
 flake8==7.1.1
 Flask==3.1.0
@@ -17,5 +18,6 @@ pycodestyle==2.12.1
 pyflakes==3.2.0
 pylint==3.3.3
 pytest==8.3.4
+pytest-cov==6.0.0
 tomlkit==0.13.2
 Werkzeug==3.1.3

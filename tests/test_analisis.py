@@ -1,3 +1,5 @@
+import pytest
+
 from src.analisis import Oracion
 
 def test_analizar_elementos_basicos():
@@ -19,3 +21,45 @@ def test_analizar_elementos_basicos():
         "Los ultimos 5 caracteres son: rueba<br>"
         "</p></div>"
     )
+
+
+@pytest.mark.parametrize(
+    "texto, resultado_esperado",
+    [
+        (
+            "texto de prueba",
+            (
+                "<div><p><strong>Analisis de saludo:</strong></p><p>"
+                "Esta oracion no parece un saludo<br>"
+                "No es una oracion completa<br>"
+                "No es una introduccion<br>"
+                "</p></div>"
+            )
+        ),
+        (
+            "Hola, este es un texto de prueba",
+            (
+                "<div><p><strong>Analisis de saludo:</strong></p><p>"
+                "Esta oracion parece un saludo<br>"
+                "No es una oracion completa<br>"
+                "No es una introduccion<br>"
+                "</p></div>"
+            )
+        ),
+        (
+            "Hola soy David, este es un texto de prueba",
+            (
+                "<div><p><strong>Analisis de saludo:</strong></p><p>"
+                "Esta oracion parece un saludo<br>"
+                "No es una oracion completa<br>"
+                "Es una introduccion<br>"
+                "</p></div>"
+            )
+        ),
+    ]
+)
+def test_analizar_saludo(texto, resultado_esperado):
+    oracion = Oracion(texto, "David")
+    resultado = oracion.analizar_saludo()
+
+    assert resultado == resultado_esperado
