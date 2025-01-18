@@ -24,7 +24,7 @@ class Oracion:
 
         resultado += f"El numero de palabras es: {len(self.palabras)}<br>"
 
-        resultado += f"Comienza con: {self.texto[0]}<br>"
+        resultado += f"Comienza asdfasf con: {self.texto[0]}<br>"
         resultado += f"El segundo caracter es: {self.texto[1]}<br>"
         resultado += f"El tercer caracter es: {self.texto[2]}<br>"
         resultado += f"Los 5 primeros caracteres son: {self.texto[:5]}<br>"
